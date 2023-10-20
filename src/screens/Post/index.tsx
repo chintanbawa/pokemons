@@ -5,7 +5,7 @@ import {useRoute} from '@react-navigation/native';
 //hooks
 import usePost from './__hook/usePost';
 //types
-import {IComment} from 'types';
+import {IPost} from 'types';
 //components
 import {Text} from 'components/Text';
 //colors
@@ -14,7 +14,7 @@ import colors from 'constants/colors';
 const Post = () => {
   const route = useRoute();
 
-  const {post} = route && (route.params as {post: IComment});
+  const {post} = route && (route.params as {post: IPost});
 
   //useQuery hooks
   const {data: comments, isSuccess, isLoading} = usePost(post.id);

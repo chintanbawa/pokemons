@@ -10,6 +10,7 @@ module.exports = {
           screens: './src/screens',
           constants: './src/constants',
           components: './src/components',
+          apis: './src/apis',
         },
       },
     ],
