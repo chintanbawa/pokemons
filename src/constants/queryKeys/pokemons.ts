@@ -1,4 +1,5 @@
 export const POKEMONS = {
   //getPokemons
   GET_POKEMONS: 'GET_POKEMONS',
+  GET_POKEMON_DETAILS: 'GET_POKEMON_DETAILS',
 };

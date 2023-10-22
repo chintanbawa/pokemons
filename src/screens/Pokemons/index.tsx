@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {Box, FlatList, Spinner, Pressable} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 
 //types
@@ -13,9 +7,7 @@ import {IPokemon} from 'types';
 //hooks
 import usePokemons from './__hooks/usePokemons';
 //components
-import {Text} from 'components/Text';
-//constants
-import Colors from 'constants/colors';
+import {NBText} from 'components/Text';
 
 const Pokemons = () => {
   const navigation = useNavigation();
@@ -32,28 +24,31 @@ const Pokemons = () => {
 
   if (isLoading) {
     return (
-      <View style={styles.warning}>
-        <Text>Loading...</Text>
-      </View>
+      <Box alignItems="center" my={5}>
+        <Spinner color="black" size="lg" />
+        <NBText mt={1}>Loading...</NBText>
+      </Box>
     );
   }
 
   if (error || !data) {
     return (
-      <View style={styles.warning}>
-        <Text>Sorry! something went wrong!</Text>
-      </View>
+      <Box alignItems="center" my={5}>
+        <NBText>Sorry! something went wrong!</NBText>
+      </Box>
     );
   }
 
   const renderPokemon = ({item, index}: {item: IPokemon; index: number}) => (
-    <TouchableOpacity
+    <Pressable
       key={item.name + index}
-      onPress={() => navigation.push('Post', {post: item})}>
-      <View style={styles.item}>
-        <Text style={styles.text}>{item.name.toUpperCase()}</Text>
-      </View>
-    </TouchableOpacity>
+      onPress={() => navigation.push('Pokemon Details', {pokemon: item})}>
+      <Box bgColor="green.700" p={5} m={2} borderRadius={10}>
+        <NBText color="white" fontWeight={700}>
+          {item.name.toUpperCase()}
+        </NBText>
+      </Box>
+    </Pressable>
   );
 
   const getItemExtractorKey = (item, index) => index.toString();
@@ -65,50 +60,19 @@ const Pokemons = () => {
   };
 
   const renderFooterComponent = () =>
-    isFetchingNextPage && <ActivityIndicator color="#000" size="large" />;
+    isFetchingNextPage && <Spinner color="#000" size="lg" />;
 
   return (
-    <View style={styles.container}>
-      <React.Fragment>
-        <FlatList
-          style={styles.wrapper}
-          data={data.pages.map(page => page.results).flat()}
-          keyExtractor={getItemExtractorKey}
-          renderItem={renderPokemon}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.3}
-          ListFooterComponent={renderFooterComponent}
-        />
-      </React.Fragment>
-    </View>
+    <FlatList
+      my={5}
+      data={data.pages.map(page => page.results).flat()}
+      keyExtractor={getItemExtractorKey}
+      renderItem={renderPokemon}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+      ListFooterComponent={renderFooterComponent}
+    />
   );
 };
 
 export default Pokemons;
-
-//styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.white,
-    padding: 10,
-  },
-  warning: {
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  wrapper: {
-    flex: 1,
-    paddingVertical: 30,
-  },
-  item: {
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    backgroundColor: '#333',
-    marginVertical: 10,
-    borderRadius: 10,
-  },
-  text: {
-    color: 'white',
-  },
-});

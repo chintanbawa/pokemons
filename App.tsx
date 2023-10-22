@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import {NativeBaseProvider} from 'native-base';
 
 //navigation
 import Main from 'navigation/main';
@@ -14,7 +15,9 @@ export default function App() {
       <StatusBar />
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
-          <Main />
+          <NativeBaseProvider>
+            <Main />
+          </NativeBaseProvider>
         </QueryClientProvider>
       </NavigationContainer>
     </React.Fragment>

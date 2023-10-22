@@ -10,3 +10,5 @@ export const getPokemons = async ({pageParam = undefined}) => {
 
   return data.data;
 };
+
+export const getPokemonDetails = (url: string) => axios.get(url);

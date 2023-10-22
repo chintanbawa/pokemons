@@ -1,24 +1,10 @@
-import React, {ReactNode} from 'react';
-import {StyleSheet, Text as RNText, TextStyle} from 'react-native';
+import React from 'react';
+import {IHeadingProps, ITextProps, Text} from 'native-base';
 
-//colors
-import Colors from 'constants/colors';
-//styles
-const styles = StyleSheet.create({
-  defaultText: {
-    color: Colors.primary,
-    fontSize: 18,
-  },
-});
+export const NBText = (props: ITextProps) => {
+  return <Text {...props}>{props.children}</Text>;
+};
 
-export const Text = ({
-  children,
-  style = {},
-}: {
-  children: ReactNode;
-  style?: TextStyle;
-}) => {
-  const textStyles: TextStyle[] = [styles.defaultText];
-  textStyles.push(style);
-  return <RNText style={textStyles}>{children}</RNText>;
+export const NBHeading = (props: IHeadingProps) => {
+  return <Text {...props}>{props.children}</Text>;
 };
