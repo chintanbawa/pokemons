@@ -1,4 +1,14 @@
+import {ReactNode} from 'react';
+
 //Interfaces
+export interface IShadowBox {
+  children: ReactNode;
+  shadow?: number;
+  bgColor?: string;
+  gap?: number;
+  borderRadius?: number;
+}
+
 export interface IPost {
   userId: number;
   id: number;

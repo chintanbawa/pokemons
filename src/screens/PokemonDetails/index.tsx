@@ -1,5 +1,6 @@
 import React, {useMemo, useState} from 'react';
-import {Box, Card, Divider, Flex, Image, ScrollView} from 'native-base';
+import {useWindowDimensions} from 'react-native';
+import {Box, Divider, Flex, Image, ScrollView} from 'native-base';
 import {useRoute} from '@react-navigation/native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {allColors} from 'constants/all-colors';
@@ -11,7 +12,7 @@ import {IPokemon} from 'types';
 import usePokemonDetails from './__hooks/usePokemonDetails';
 //components
 import {NBHeading, NBText} from 'components/Text';
-import {useWindowDimensions} from 'react-native';
+import ShadowBox from 'components/ShadowBox';
 
 const HeadingText = ({text}: {text: string}) => (
   <NBHeading fontSize="md" fontWeight={600} underline mt={2}>
@@ -124,10 +125,9 @@ const PokemonDetails = () => {
           <HeadingText text="Abilities:" />
           <ScrollView horizontal>
             {pokemonDetails.abilities.map((ability, index) => (
-              <Card key={`${ability.ability.name}_${index}`}>
+              <ShadowBox key={`${ability.ability.name}_${index}`}>
                 <Flex
-                  bgColor="white"
-                  w={width / 3}
+                  minW={width / 3}
                   h={60}
                   borderRadius={10}
                   alignItems="center"
@@ -136,7 +136,7 @@ const PokemonDetails = () => {
                     {ability.ability.name.toUpperCase()}
                   </NBText>
                 </Flex>
-              </Card>
+              </ShadowBox>
             ))}
           </ScrollView>
 
@@ -148,22 +148,20 @@ const PokemonDetails = () => {
                 ? 'black'
                 : 'white';
               return (
-                <Card key={`${gameIndex.version.name}_${index}`}>
+                <ShadowBox
+                  key={`${gameIndex.version.name}_${index}`}
+                  bgColor={backgroundColor}>
                   <Box
-                    bgColor="white"
                     w={width / 3}
                     h={width / 3}
                     borderRadius={10}
                     alignItems="center"
-                    justifyContent="center"
-                    style={{
-                      backgroundColor,
-                    }}>
+                    justifyContent="center">
                     <NBText color={textColor} fontWeight="bold">
                       {gameIndex.version.name.toUpperCase()}
                     </NBText>
                   </Box>
-                </Card>
+                </ShadowBox>
               );
             })}
           </ScrollView>
@@ -171,19 +169,18 @@ const PokemonDetails = () => {
           <HeadingText text="Moves:" />
           <ScrollView horizontal>
             {pokemonDetails.moves.map((move, index) => (
-              <Card key={`${move.move.name}_${index}`}>
+              <ShadowBox key={`${move.move.name}_${index}`}>
                 <Flex
-                  bgColor="white"
-                  w={width / 3}
+                  minW={width / 3}
                   h={60}
-                  borderRadius={10}
+                  px={4}
                   alignItems="center"
                   justifyContent="center">
                   <NBText fontSize="12px" fontWeight="bold">
                     {move.move.name.toUpperCase()}
                   </NBText>
                 </Flex>
-              </Card>
+              </ShadowBox>
             ))}
           </ScrollView>
         </Box>
